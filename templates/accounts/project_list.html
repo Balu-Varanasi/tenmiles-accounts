@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block navigation %}
+<div id="navbar" class="collapse navbar-collapse">
+  <ul class="nav navbar-nav">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'client_list' %}">Clients</a></li>
+    <li class="active"><a href="{% url 'project_list' %}">Projects</a></li>
+  </ul>
+</div>
+{% endblock navigation %}
+
+{% block content %}
+<h1>List of Projects</h1>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>Hours Spent</th>
+        <th>Cost for the project</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    	{% for project in object_list %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></td>
+        <td>{{ project.client.name }}</td>
+        <td>{{ project.start_date }}</td>
+        <td><a href="{% url 'project_edit' project.id %}">Edit</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

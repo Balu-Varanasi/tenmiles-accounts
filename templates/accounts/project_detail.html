@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{ project.name }}</h3>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Client</th>
+        <th>Start Date</th>
+        <th>Hours Spent</th>
+        <th>Cost for the project</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></td>
+        <td>{{ project.client.name }}</td>
+        <td>{{ project.start_date }}</td>
+        <td>{{ project.time_spent }}</td>
+        <td>$ {{ project.get_total_cost }}</td>
+        <td><a href="{% url 'project_edit' project.id %}">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
