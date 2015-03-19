@@ -13,6 +13,7 @@
 {% block content %}
 <h1>List of Clients</h1>
 <div class="table-responsive">
+  {% if object_list %}
   <table class="table table-striped">
     <thead>
       <tr>
@@ -31,5 +32,9 @@
       {% endfor %}
     </tbody>
   </table>
+  {% else %}
+    <p style="text-align: center;">No Clients Found</p>
+  {% endif %}
+
 </div>
 {% endblock content %}
