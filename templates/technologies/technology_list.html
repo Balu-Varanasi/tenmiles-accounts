@@ -13,7 +13,7 @@
   </ul>
 </li>
 
-<li class="active dropdown">
+<li class="dropdown">
   <a href="{% url 'client_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Clients <b class="caret"></b>
   </a>
@@ -33,7 +33,7 @@
   </ul>
 </li>
 
-<li class="dropdown">
+<li class="active dropdown">
   <a href="{% url 'technology_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Technologies <b class="caret"></b>
   </a>
@@ -42,11 +42,10 @@
     <li><a href="{% url 'technology_new' %}">Create a New Technology</a></li>
   </ul>
 </li>
-
 {% endblock navigation %}
 
 {% block content %}
-<h1>List of Clients</h1>
+<h1>List of Technologies</h1>
 <div class="table-responsive">
   {% if object_list %}
   <table class="table table-striped">
@@ -54,35 +53,22 @@
       <tr>
         <th>#</th>
         <th>Name</th>
-        <th>Email</th>
-        <th>Company</th>
-        <th>Projects</th>
         <th colspan="2"></th>
       </tr>
     </thead>
     <tbody>
-    	{% for client in object_list %}
+    	{% for technology in object_list %}
       <tr>
         <td>{{ forloop.counter }}</td>
-        <td><a href="{% url 'client_detail' client.id %}">{{ client.name }}</a></td>
-        <td>{{ client.email }}</td>
-        <td>{{ client.company.name }}</td>
-        <td>
-          <ol>
-          {% for project in client.project_set.all %}
-            <li><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></li>
-          {% endfor %}
-          </ol>
-        </td>
-        <td><a href="{% url 'client_edit' client.id %}">Edit</a></td>
-        <td><a href="{% url 'client_delete' client.id %}">Delete</a></td>
+        <td><a href="{% url 'technology_detail' technology.id %}">{{ technology.name }}</a></td>
+        <td><a href="{% url 'technology_edit' technology.id %}">Edit</a></td>
+        <td><a href="{% url 'technology_delete' technology.id %}">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   {% else %}
-    <p style="text-align: center;">No Clients Found</p>
+    <p style="text-align: center;">No Technologies Found</p>
   {% endif %}
-
 </div>
 {% endblock content %}

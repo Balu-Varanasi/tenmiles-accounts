@@ -43,6 +43,10 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("company_detail",
+                       args=[self.pk])
+
 
 class Client(models.Model):
     """
@@ -71,6 +75,10 @@ class Client(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("technology_detail",
+                       args=[self.pk])
+
 
 class Technology(models.Model):
     """
@@ -91,6 +99,10 @@ class Technology(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("technology_detail",
+                       args=[self.pk])
 
 
 class Project(models.Model):

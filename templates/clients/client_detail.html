@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>List of Projects </h3>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Company</th>
+        <th>Projects</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ client.name }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.company.name }}</td>
+        <td>
+          <ol>
+          {% for project in client.project_set.all %}
+            <li><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></li>
+          {% endfor %}
+          </ol>
+        </td>
+        <td><a href="{% url 'client_edit' client.id %}">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

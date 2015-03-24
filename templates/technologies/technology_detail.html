@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{ technology.name }}</h3>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="{% url 'technology_detail' technology.id %}">{{ technology.name }}</a></td>
+        <td>{{ technology.name }}</td>
+        <td><a href="{% url 'technology_edit' technology.id %}">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block navigation %}
+
 <li><a href="{% url 'home' %}">Home</a></li>
 
 <li class="dropdown">
@@ -13,7 +14,7 @@
   </ul>
 </li>
 
-<li class="active dropdown">
+<li class="dropdown">
   <a href="{% url 'client_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Clients <b class="caret"></b>
   </a>
@@ -23,7 +24,7 @@
   </ul>
 </li>
 
-<li class="dropdown">
+<li class="active dropdown">
   <a href="{% url 'project_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Projects <b class="caret"></b>
   </a>
@@ -42,11 +43,10 @@
     <li><a href="{% url 'technology_new' %}">Create a New Technology</a></li>
   </ul>
 </li>
-
 {% endblock navigation %}
 
 {% block content %}
-<h1>List of Clients</h1>
+<h1>List of Projects</h1>
 <div class="table-responsive">
   {% if object_list %}
   <table class="table table-striped">
@@ -54,35 +54,30 @@
       <tr>
         <th>#</th>
         <th>Name</th>
-        <th>Email</th>
-        <th>Company</th>
-        <th>Projects</th>
+        <th>Client Name</th>
+        <th>Start Date</th>
+        <th>Hours Spent</th>
+        <th>Cost for the project</th>
         <th colspan="2"></th>
       </tr>
     </thead>
     <tbody>
-    	{% for client in object_list %}
+    	{% for project in object_list %}
       <tr>
         <td>{{ forloop.counter }}</td>
-        <td><a href="{% url 'client_detail' client.id %}">{{ client.name }}</a></td>
-        <td>{{ client.email }}</td>
-        <td>{{ client.company.name }}</td>
-        <td>
-          <ol>
-          {% for project in client.project_set.all %}
-            <li><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></li>
-          {% endfor %}
-          </ol>
-        </td>
-        <td><a href="{% url 'client_edit' client.id %}">Edit</a></td>
-        <td><a href="{% url 'client_delete' client.id %}">Delete</a></td>
+        <td><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></td>
+        <td>{{ project.client.name }}</td>
+        <td>{{ project.start_date }}</td>
+        <td>{{ project.time_spent }}</td>
+        <td>{{ project.get_total_cost }}</td>
+        <td><a href="{% url 'project_edit' project.id %}">Edit</a></td>
+        <td><a href="{% url 'project_delete' project.id %}">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   {% else %}
-    <p style="text-align: center;">No Clients Found</p>
+    <p style="text-align: center;">No Projects Found</p>
   {% endif %}
-
 </div>
 {% endblock content %}
