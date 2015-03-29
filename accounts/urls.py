@@ -14,6 +14,10 @@ from .views import (
     TechnologyListView, TechnologyDetailView, TechnologyCreateView,
     TechnologyUpdateView, TechnologyDeleteView,
 
+    DailySprintTimeSpanListView, DailySprintTimeSpanDetailView,
+    DailySprintTimeSpanCreateView, DailySprintTimeSpanUpdateView,
+    DailySprintTimeSpanDeleteView,
+
     HomeView,)
 
 
@@ -113,6 +117,34 @@ urlpatterns += patterns(
 
     url(r'^technologies/(?P<pk>\d+)/delete/$',
         TechnologyDeleteView.as_view(), name="technology_delete"),
+)
+
+###########################################################
+#                       DailySprintTimeSpan URLs                   #
+###########################################################
+
+urlpatterns += patterns(
+    '',
+
+    url(r'^daily_sprints/$',
+        DailySprintTimeSpanListView.as_view(),
+        name="daily_sprint_list"),
+
+    url(r'^daily_sprints/new/$',
+        DailySprintTimeSpanCreateView.as_view(),
+        name="daily_sprint_new"),
+
+    url(r'^daily_sprints/(?P<pk>\d+)/edit/$',
+        DailySprintTimeSpanUpdateView.as_view(),
+        name="daily_sprint_edit"),
+
+    url(r'^daily_sprints/(?P<pk>\d+)/$',
+        DailySprintTimeSpanDetailView.as_view(),
+        name="daily_sprint_detail"),
+
+    url(r'^daily_sprints/(?P<pk>\d+)/delete/$',
+        DailySprintTimeSpanDeleteView.as_view(),
+        name="daily_sprint_delete"),
 )
 
 ###########################################################

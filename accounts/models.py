@@ -105,6 +105,76 @@ class Technology(models.Model):
                        args=[self.pk])
 
 
+class DailySprintTimeSpan(models.Model):
+    """
+    DailySprintTimeSpan within the 'accounts' are represented by this model.
+
+    all fields are required.
+    """
+
+    project = models.ForeignKey(
+        "accounts.Project")
+
+    started_at = models.DateTimeField(
+        _("Started At"),
+        null=True)
+
+    ended_at = models.DateTimeField(
+        _("Ended At"),
+        null=True)
+
+    hours_spent = models.DecimalField(
+        _("Time Spent"),
+        max_digits=5,
+        decimal_places=2,
+        default=Decimal(0))
+
+    def save(self, *args, **kwargs):
+        date_delta = self.ended_at - self.started_at
+        self.hours_spent += Decimal(date_delta.total_seconds() / 3600)
+        super(DailySprintTimeSpan, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("daily_sprint_detail",
+                       args=[self.pk])
+
+
+class ProjectStatistics(models.Model):
+    """
+    DailySprintTimeSpan within the 'accounts' are represented by this model.
+
+    all fields are required.
+    """
+
+    project = models.OneToOneField(
+        "accounts.Project")
+
+    total_time_spent = models.DecimalField(
+        _("Time Spent"),
+        max_digits=50,
+        decimal_places=10,
+        default=Decimal(0))
+
+    total_cost = models.DecimalField(
+        _("Time Spent"),
+        max_digits=50,
+        decimal_places=10,
+        default=Decimal(0))
+
+    class Meta:
+        verbose_name = "Project Statistics"
+        verbose_name_plural = "Projects Statistics"
+
+    def __str__(self):
+        return self.project.name
+
+    def get_total_hours(self):
+        return self.total_time_spent
+
+    def get_total_cost(self):
+        return self.total_cost
+
+
 class Project(models.Model):
     """
     Projects within the 'accounts' are represented by this model.
@@ -123,13 +193,12 @@ class Project(models.Model):
         "accounts.Technology")
 
     start_date = models.DateField(
-        _("Start Date"))
+        _("Start Date"),
+        null=True)
 
-    time_spent = models.DecimalField(
-        _("Time Spent"),
-        max_digits=5,
-        decimal_places=2,
-        default=Decimal(0))
+    end_date = models.DateField(
+        _("End Date"),
+        null=True)
 
     cost = models.DecimalField(
         _("Cost Per Hour"),
@@ -147,9 +216,21 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        super(Project, self).save(*args, **kwargs)
+        ProjectStatistics.objects.get_or_create(
+            project=self)
+
     def get_absolute_url(self):
         return reverse("project_detail",
                        args=[self.pk])
 
     def get_total_cost(self):
-        return self.time_spent * self.cost
+        project_statistics, created = ProjectStatistics.objects.get_or_create(
+            project=self)
+        return project_statistics.get_total_cost()
+
+    def get_total_hours(self):
+        project_statistics, created = ProjectStatistics.objects.get_or_create(
+            project=self)
+        return project_statistics.get_total_hours()

@@ -19,7 +19,7 @@
         <td><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></td>
         <td>{{ project.client.name }}</td>
         <td>{{ project.start_date }}</td>
-        <td>{{ project.time_spent }}</td>
+        <td>{{ project.get_total_hours }}</td>
         <td>$ {{ project.get_total_cost }}</td>
         <td><a href="{% url 'project_edit' project.id %}">Edit</a></td>
       </tr>

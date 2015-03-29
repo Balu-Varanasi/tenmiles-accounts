@@ -3,7 +3,7 @@ from django.views.generic import (
     ListView, DetailView,
     UpdateView, CreateView, DeleteView)
 
-from .models import Company, Client, Project, Technology
+from .models import Company, Client, Project, Technology, DailySprintTimeSpan
 
 
 ###########################################################
@@ -90,8 +90,9 @@ class ProjectDetailView(DetailView):
 
 class ProjectUpdateView(UpdateView):
     model = Project
-    fields = ['name', 'client', 'technologies', 'time_spent',
-              'cost', 'start_date']
+    fields = ['name', 'client', 'technologies', 'start_date',
+              'end_date', 'cost']
+    template_name = 'projects/project_form.html'
 
 
 class ProjectDeleteView(DeleteView):
@@ -130,6 +131,42 @@ class TechnologyDeleteView(DeleteView):
     model = Technology
     template_name = 'technologies/technology_confirm_delete.html'
     success_url = reverse_lazy('technology_list')
+
+
+###########################################################
+#                       Technology                          #
+###########################################################
+
+class DailySprintTimeSpanListView(ListView):
+    model = DailySprintTimeSpan
+    template_name = 'daily_sprint_time_spans/daily_sprint_time_span_list.html'
+
+
+class DailySprintTimeSpanCreateView(CreateView):
+    model = DailySprintTimeSpan
+    template_name = 'daily_sprint_time_spans/daily_sprint_time_span_form.html'
+    fields = ['project', 'started_at', 'ended_at']
+    success_url = reverse_lazy('daily_sprint_list')
+
+
+class DailySprintTimeSpanDetailView(DetailView):
+    model = DailySprintTimeSpan
+    context_object_name = "daily_sprint"
+    template_name = \
+        'daily_sprint_time_spans/daily_sprint_time_span_detail.html'
+
+
+class DailySprintTimeSpanUpdateView(UpdateView):
+    model = DailySprintTimeSpan
+    template_name = 'daily_sprint_time_spans/daily_sprint_time_span_form.html'
+    fields = ['project', 'started_at', 'ended_at']
+
+
+class DailySprintTimeSpanDeleteView(DeleteView):
+    model = DailySprintTimeSpan
+    template_name = \
+        'daily_sprint_time_spans/daily_sprint_time_span_confirm_delete.html'
+    success_url = reverse_lazy('daily_sprint_list')
 
 
 ###########################################################

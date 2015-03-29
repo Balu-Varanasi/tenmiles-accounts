@@ -35,6 +35,16 @@
 </li>
 
 <li class="dropdown">
+  <a href="{% url 'daily_sprint_list' %}" class="dropdown-toggle" data-toggle="dropdown">
+    Daily Sprints <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'daily_sprint_list' %}">All Daily Sprints</a></li>
+    <li><a href="{% url 'daily_sprint_new' %}">Create a New Daily Sprint</a></li>
+  </ul>
+</li>
+
+<li class="dropdown">
   <a href="{% url 'technology_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Technologies <b class="caret"></b>
   </a>
@@ -68,7 +78,7 @@
         <td><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></td>
         <td>{{ project.client.name }}</td>
         <td>{{ project.start_date }}</td>
-        <td>{{ project.time_spent }}</td>
+        <td>{{ project.get_total_hours }}</td>
         <td>{{ project.get_total_cost }}</td>
         <td><a href="{% url 'project_edit' project.id %}">Edit</a></td>
         <td><a href="{% url 'project_delete' project.id %}">Delete</a></td>

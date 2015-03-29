@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Started At</th>
+        <th>Ended At</th>
+        <th>Total hours</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="{% url 'project_detail' daily_sprint.project.id %}">{{ daily_sprint.project.name }}</a></td>
+        <td>{{ daily_sprint.started_at }}</td>
+        <td>{{ daily_sprint.ended_at }}</td>
+        <td>{{ daily_sprint.hours_spent }}</td>
+        <td><a href="{% url 'daily_sprint_edit' daily_sprint.id %}">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

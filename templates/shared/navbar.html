@@ -31,6 +31,16 @@
 </li>
 
 <li class="dropdown">
+  <a href="{% url 'daily_sprint_list' %}" class="dropdown-toggle" data-toggle="dropdown">
+    Daily Sprints <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'daily_sprint_list' %}">All Daily Sprints</a></li>
+    <li><a href="{% url 'daily_sprint_new' %}">Create a New Daily Sprint</a></li>
+  </ul>
+</li>
+
+<li class="dropdown">
   <a href="{% url 'technology_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Technologies <b class="caret"></b>
   </a>

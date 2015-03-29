@@ -33,7 +33,7 @@
   </ul>
 </li>
 
-<li class="dropdown">
+<li class="active dropdown">
   <a href="{% url 'daily_sprint_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Daily Sprints <b class="caret"></b>
   </a>
@@ -43,7 +43,7 @@
   </ul>
 </li>
 
-<li class="active dropdown">
+<li class="dropdown">
   <a href="{% url 'technology_list' %}" class="dropdown-toggle" data-toggle="dropdown">
     Technologies <b class="caret"></b>
   </a>
@@ -55,7 +55,7 @@
 {% endblock navigation %}
 
 {% block content %}
-<h1>List of Technologies</h1>
+<h1>List of Daily Sprints</h1>
 <div class="table-responsive">
   {% if object_list %}
   <table class="table table-striped">
@@ -63,22 +63,29 @@
       <tr>
         <th>#</th>
         <th>Name</th>
-        <th colspan="2"></th>
+        <th>Started At</th>
+        <th>Ended At</th>
+        <th>Total hours</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-    	{% for technology in object_list %}
+      {% for daily_sprint_time_span in object_list %}
       <tr>
         <td>{{ forloop.counter }}</td>
-        <td><a href="{% url 'technology_detail' technology.id %}">{{ technology.name }}</a></td>
-        <td><a href="{% url 'technology_edit' technology.id %}">Edit</a></td>
-        <td><a href="{% url 'technology_delete' technology.id %}">Delete</a></td>
+        <td><a href="{% url 'daily_sprint_detail' daily_sprint_time_span.id %}">{{ daily_sprint_time_span.project.name }}</a></td>
+        <td>{{ daily_sprint_time_span.started_at }}</td>
+        <td>{{ daily_sprint_time_span.ended_at }}</td>
+        <td>{{ daily_sprint_time_span.hours_spent }}</td>
+        <td><a href="{% url 'daily_sprint_edit' daily_sprint_time_span.id %}">Edit</a></td>
+        <td><a href="{% url 'daily_sprint_delete' daily_sprint_time_span.id %}">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+
   {% else %}
-    <p style="text-align: center;">No Technologies Found</p>
+    <p style="text-align: center;">No Daily Sprints Found</p>
   {% endif %}
 </div>
 {% endblock content %}
